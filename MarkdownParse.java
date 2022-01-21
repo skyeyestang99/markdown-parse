@@ -15,6 +15,9 @@ public class MarkdownParse {
             int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
             int openParen = markdown.indexOf("(", nextCloseBracket);
             int closeParen = markdown.indexOf(")", openParen);
+            if(openParen+1==closeParen){
+                return null;
+            }
             toReturn.add(markdown.substring(openParen + 1, closeParen));
             currentIndex = closeParen + 1;
         }
@@ -24,6 +27,11 @@ public class MarkdownParse {
 		Path fileName = Path.of(args[0]);
 	    String contents = Files.readString(fileName);
         ArrayList<String> links = getLinks(contents);
-        System.out.println(links);
+        if(links==null){
+            System.out.println("no links detected");
+        }
+        else{
+            System.out.println(links);
+        }
     }
 }
